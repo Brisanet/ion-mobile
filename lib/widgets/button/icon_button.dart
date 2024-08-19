@@ -129,10 +129,10 @@ abstract class IonIconButton extends StatelessWidget {
                   child: ZoomIn(
                     child: Row(
                       children: [
-                        IonCircularLoading(
-                            radius: 10.r,
-                            strokeWidth: 2,
-                            gradientColors: gradientColors),
+                        SizedBox(
+                            height: 18.h,
+                            width: 18.h,
+                            child: CircularProgressIndicator(color: disabled ? IonMainColors.neutral5 : ionIconColor,  strokeWidth: 3.h,)),
                       ],
                     ),
                   ),

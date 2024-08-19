@@ -12,6 +12,7 @@ import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
 abstract class IonButton extends StatelessWidget {
   String text;
+  String loadingText;
   final void Function() onTap;
   void Function() onTapCancel = () {};
   void Function(bool) onHover = (bool isHover) {};
@@ -34,6 +35,7 @@ abstract class IonButton extends StatelessWidget {
   IonButton({
     Key? key,
     this.text = '',
+    this.loadingText = 'Loading',
     required this.onTap,
     required this.color,
     required this.width,
@@ -93,7 +95,7 @@ abstract class IonButton extends StatelessWidget {
           height: height,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
             border: dashedBorder
                 ? RDottedLineBorder.all(
                     color: borderColor,
@@ -104,63 +106,66 @@ abstract class IonButton extends StatelessWidget {
                     width: 1,
                   ),
           ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                !isLoading && ionIcon != null
-                    ? SvgPicture.asset(
-                        ionIcon!,
-                        package: 'ion_mobile',
-                        allowDrawingOutsideViewBox: true,
-                        color: disabled ? IonMainColors.neutral5 : ionIconColor,
-                      )
-                    : !isLoading && icon != null
-                        ? icon!
-                        : const SizedBox(),
-                Visibility(
-                  visible: isLoading,
-                  child: ZoomIn(
-                    child: Row(
-                      children: [
-                        IonCircularLoading(
-                            radius: 10.r,
-                            strokeWidth: 2,
-                            gradientColors: gradientColors),
-                      ],
+          child: Padding(
+            padding: const EdgeInsets.all(6.0).r,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  !isLoading && ionIcon != null
+                      ? SvgPicture.asset(
+                          ionIcon!,
+                          package: 'ion_mobile',
+                          allowDrawingOutsideViewBox: true,
+                          color: disabled ? IonMainColors.neutral5 : ionIconColor,
+                        )
+                      : !isLoading && icon != null
+                          ? icon!
+                          : const SizedBox(),
+                  Visibility(
+                    visible: isLoading,
+                    child: ZoomIn(
+                      child:  Row(
+                        children: [
+                          SizedBox(
+                            height: 18.h,
+                            width: 18.h,
+                            child: CircularProgressIndicator(color: disabled ? IonMainColors.neutral5 : ionIconColor,  strokeWidth: 3.h,)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                AnimatedContainer(
-                    transform: Matrix4.translationValues(
-                      isLoading ? 4.w : 0,
-                      0,
-                      0,
-                    ),
-                    duration: const Duration(milliseconds: 500),
-                    child: text != ''
-                        ? SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  isLoading ? 'Loading' : text,
-                                  style: IonTextStyleBody(
-                                    ionFontWeight: IonFontWeight.medium,
-                                    ionFontStyle: IonFontStyle.normal,
-                                    ionTextColor: disabled
-                                        ? IonTextColor.neutral5
-                                        : ionTextColor,
-                                    ionFontSize: IonBodyFontSizeHeight.large,
+                  AnimatedContainer(
+                      transform: Matrix4.translationValues(
+                        isLoading ? 4.w : 0,
+                        0,
+                        0,
+                      ),
+                      duration: const Duration(milliseconds: 500),
+                      child: text != ''
+                          ? SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    isLoading ? loadingText : text,
+                                    style: IonTextStyleBody(
+                                      ionFontWeight: IonFontWeight.medium,
+                                      ionFontStyle: IonFontStyle.normal,
+                                      ionTextColor: disabled
+                                          ? IonTextColor.neutral5
+                                          : ionTextColor,
+                                      ionFontSize: IonBodyFontSizeHeight.large,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        : const SizedBox()),
-              ],
+                            )
+                          : const SizedBox()),
+                ],
+              ),
             ),
           ),
         ),
@@ -173,6 +178,7 @@ class IonButtonPrimary extends IonButton {
   IonButtonPrimary(
       {Key? key,
       String text = '',
+      super.loadingText,
       bool isDanger = false,
       required void Function() onTap,
       super.disabled,
@@ -184,6 +190,7 @@ class IonButtonPrimary extends IonButton {
       : super(
           key: key,
           text: text,
+
           isDanger: isDanger,
           onTap: onTap,
           ionIconColor: IonButtonPrimaryColors(isDanger).iconColor,
@@ -222,6 +229,7 @@ class IonButtonSecundary extends IonButton {
   IonButtonSecundary(
       {Key? key,
       String text = '',
+      super.loadingText,
       bool isDanger = false,
       required void Function() onTap,
       super.icon,
@@ -275,6 +283,7 @@ class IonButtonGhost extends IonButton {
   IonButtonGhost(
       {Key? key,
       String text = '',
+      super.loadingText,
       bool isDanger = false,
       required void Function() onTap,
       super.icon,
@@ -323,6 +332,7 @@ class IonButtonDashed extends IonButton {
   IonButtonDashed(
       {Key? key,
       String text = '',
+      super.loadingText,
       bool isDanger = false,
       required void Function() onTap,
       super.icon,

@@ -50,7 +50,7 @@ Button.primary(
                 max: 60.h,
               ),
               width:
-                  c.number(label: 'width', initial: 48.w, min: 24.w, max: 60.w),
+                  c.number(label: 'width', initial: 110.w, min: 90.w, max: 200.w),
               isLoading: c.boolean(
                   label: 'loading',
                   description: 'check behaviour when is loading',
