@@ -7,7 +7,7 @@ import 'package:flutterbook/flutterbook.dart';
 import 'package:ion_mobile/design/colors.dart';
 import 'package:ion_mobile/design/iconography/ion_icons.dart';
 import 'package:ion_mobile/ion_mobile.dart';
-
+import 'package:ion_mobile/widgets/input/input.dart';
 import 'widgets/date_picker.component.dart';
 
 void main() {
@@ -23,7 +23,7 @@ void main() {
         // themeMode: ThemeMode.dark,
       );
     },
-    child: const FlutterBookPage(),
+    child: const Home(), //FlutterBookPage(),
   ));
 }
 
@@ -63,8 +63,9 @@ class _HomeState extends State<Home> {
             IonButtonPrimary(
               ionIcon: IonIcons.pencil,
               text: "Salvar",
+              loadingText:"Salvando",
               height: 48.h,
-              width: 296.w,
+              width: 150.w,
               isLoading: isLoading,
               onTap: () => setState(() {
                 isLoading = !isLoading;
@@ -132,6 +133,15 @@ class _HomeState extends State<Home> {
                 width: 292.w,
                 hintText:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pharetra nunc ac tempus porttitor. Suspendisse eleifend nec justo sed tempor. Praesent nec ipsum at justo scelerisque suscipit eget vel nisl...'),
+          const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: IonTextInput(      
+              labelText: 'Teste',
+              prefixIcon: Icon(Icons.lock, color: Colors.grey),
+              hasObscureText: true,
+              suffixIcon: Icon(Icons.visibility, color: Colors.grey),
+            ),
+          )
           ],
         ),
       ),
